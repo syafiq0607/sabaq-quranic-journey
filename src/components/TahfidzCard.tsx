@@ -15,6 +15,7 @@ interface TahfidzCardProps {
   items: Hafalan[];
   onAdd: () => void;
   onToggleStatus: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
 const config = {
@@ -44,7 +45,7 @@ const config = {
   },
 };
 
-const TahfidzCard = ({ type, items, onAdd, onToggleStatus }: TahfidzCardProps) => {
+const TahfidzCard = ({ type, items, onAdd, onToggleStatus,  onDelete }: TahfidzCardProps) => {
   const [expanded, setExpanded] = useState(true);
   const cfg = config[type];
   const Icon = cfg.icon;
@@ -91,36 +92,58 @@ const TahfidzCard = ({ type, items, onAdd, onToggleStatus }: TahfidzCardProps) =
         <div className="p-4 space-y-2">
           <p className="font-body text-muted-foreground text-xs mb-3">{cfg.description}</p>
           {items.map((item, i) => (
-            <div
-              key={item.id}
-              className="flex items-center gap-3 p-3 rounded-lg bg-background hover:bg-muted/50 transition-colors group animate-slide-right"
-              style={{ animationDelay: `${i * 0.05}s` }}
-            >
-              <button
-                onClick={() => onToggleStatus(item.id)}
-                className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                  item.status === "selesai"
-                    ? "bg-emerald border-emerald text-primary-foreground"
-                    : "border-border hover:border-emerald"
-                }`}
-              >
-                {item.status === "selesai" && <Check className="w-3.5 h-3.5" />}
-              </button>
-              <div className="flex-1 min-w-0">
-                <p
-                  className={`font-body text-sm font-medium ${
-                    item.status === "selesai" ? "line-through text-muted-foreground" : "text-foreground"
-                  }`}
-                >
-                  {item.surah}
-                </p>
-                <p className="font-body text-xs text-muted-foreground">Ayat {item.ayat}</p>
-              </div>
-              <span className={`font-body text-xs px-2 py-0.5 rounded-full ${cfg.badge}`}>
-                {item.tanggal}
-              </span>
-            </div>
-          ))}
+  <div
+    key={item.id}
+    className="flex items-center gap-3 p-3 rounded-lg bg-background hover:bg-muted/50 transition-colors group animate-slide-right"
+    style={{ animationDelay: `${i * 0.05}s` }}
+  >
+    {/* ✅ TOGGLE */}
+    <button
+      onClick={() => onToggleStatus(item.id)}
+      className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+        item.status === "selesai"
+          ? "bg-emerald border-emerald text-primary-foreground"
+          : "border-border hover:border-emerald"
+      }`}
+    >
+      {item.status === "selesai" && <Check className="w-3.5 h-3.5" />}
+    </button>
+
+    {/* 📖 TEXT */}
+    <div className="flex-1 min-w-0">
+      <p
+        className={`font-body text-sm font-medium ${
+          item.status === "selesai"
+            ? "line-through text-muted-foreground"
+            : "text-foreground"
+        }`}
+      >
+        {item.surah}
+      </p>
+      <p className="font-body text-xs text-muted-foreground">
+        Ayat {item.ayat}
+      </p>
+    </div>
+
+    {/* 📅 TANGGAL */}
+    <span className={`font-body text-xs px-2 py-0.5 rounded-full ${cfg.badge}`}>
+      {item.tanggal}
+    </span>
+
+    {/* 🔥 TOMBOL DELETE (INI YANG LO CARI) */}
+    <button
+      onClick={() => {
+        if (confirm("Yakin mau hapus hafalan ini?")) {
+          onDelete(item.id);
+        }
+      }}
+      className="opacity-0 group-hover:opacity-100 transition text-red-500 hover:text-red-700"
+    >
+      ❌
+    </button>
+  </div>
+))}
+          
           {items.length === 0 && (
             <p className="font-body text-muted-foreground text-sm text-center py-6">
               Belum ada hafalan. Tambahkan yang pertama!
@@ -133,6 +156,7 @@ const TahfidzCard = ({ type, items, onAdd, onToggleStatus }: TahfidzCardProps) =
           >
             <Plus className="w-4 h-4 mr-2" /> Tambah Hafalan
           </Button>
+          
         </div>
       )}
     </div>
