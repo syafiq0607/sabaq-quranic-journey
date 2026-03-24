@@ -15,26 +15,26 @@ const HeroHeader = () => {
         <p className="font-body text-gold text-sm tracking-[0.3em] uppercase mb-4 animate-fade-in">
           ✦ Hafalan Al-Qur'an ✦
         </p>
-        <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-primary-foreground mb-4 animate-fade-up">
+        <h1 className="font-display font-bold text-4xl md:text-6xl lg:text-7xl text-primary-foreground mb-4 animate-fade-up">
           Tahfidz <span className="gold-shimmer">Tracker</span>
         </h1>
-        <p className="font-body text-primary-foreground/70 text-lg md:text-xl max-w-2xl mx-auto animate-fade-up" style={{ animationDelay: '0.15s' }}>
-          Kelola hafalan Sabaq, Sabqi & Manzil dengan mudah dan terstruktur
-        </p>
+          <p className="font-body font-semibold font-[Traditional Arabic] text-primary-foreground/70 text-lg md:text-xl max-w-2xl mx-auto animate-fade-up" style={{ animationDelay: '0.15s' }}>
+            Kelola Setoran & Muraja'ahmu jadi lebih mudah
+          </p>
       </div>
       <div className="relative z-10 flex justify-center gap-8 pb-8">
         {[
-          { label: 'Total Hafalan', value: '15 Juz' },
-          { label: 'Hari Aktif', value: '120' },
-          { label: 'Target', value: '30 Juz' },
+          { label: '', value: '' },
+          { label: 'Target Hafalan', value: '30 Juz' },
+          { label: '', value: '' },
         ].map((stat, i) => (
           <div
             key={stat.label}
             className="text-center animate-fade-up"
             style={{ animationDelay: `${0.3 + i * 0.1}s` }}
           >
+            <p className="font-body  text-primary-foreground/60 text-xl tracking-wider uppercase">{stat.label}</p>
             <p className="font-display text-2xl md:text-3xl text-gold">{stat.value}</p>
-            <p className="font-body text-primary-foreground/60 text-xs tracking-wider uppercase">{stat.label}</p>
           </div>
         ))}
       </div>
