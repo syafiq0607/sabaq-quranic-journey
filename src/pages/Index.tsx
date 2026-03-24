@@ -30,6 +30,14 @@ const initialManzil: Hafalan[] = [
   { id: "m3", surah: "Al-Falaq", ayat: "1-5", tanggal: "2 minggu lalu", status: "selesai" },
 ];
 
+const deleteItem = (
+  list: Hafalan[],
+  setList: React.Dispatch<React.SetStateAction<Hafalan[]>>,
+  id: string
+) => {
+  setList(list.filter((item) => item.id !== id));
+};
+
 const Index = () => {
   const [sabaq, setSabaq] = useState<Hafalan[]>(initialSabaq);
   const [sabqi, setSabqi] = useState<Hafalan[]>(initialSabqi);
@@ -134,26 +142,29 @@ const Index = () => {
           items={sabaq}
           onAdd={() => openDialog("sabaq")}
           onToggleStatus={(id) => toggleStatus(sabaq, setSabaq, id)}
+          onDelete={(id) => deleteItem(sabaq, setSabaq, id)}
         />
         <TahfidzCard
           type="sabqi"
           items={sabqi}
           onAdd={() => openDialog("sabqi")}
           onToggleStatus={(id) => toggleStatus(sabqi, setSabqi, id)}
+          onDelete={(id) => deleteItem(sabaq, setSabaq, id)}
         />
         <TahfidzCard
           type="manzil"
           items={manzil}
           onAdd={() => openDialog("manzil")}
           onToggleStatus={(id) => toggleStatus(manzil, setManzil, id)}
+          onDelete={(id) => deleteItem(sabaq, setSabaq, id)}
         />
       </section>
 
       {/* Footer */}
       <footer className="text-center py-8 border-t border-border">
-        <p className="font-display text-lg text-foreground">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
+        <p className="font-display text-lg text-foreground">يَسَّرَ اللهُ لَنَا الْأُمُورَ</p>
         <p className="font-body text-xs text-muted-foreground mt-2">
-          Tahfidz Tracker — Semoga Allah mudahkan hafalan kita
+          Tahfidz Tracker ©2026
         </p>
       </footer>
 
